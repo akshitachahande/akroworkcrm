@@ -1,76 +1,228 @@
-# WorkCRM - Personal Task & Client Management System
+# WorkCRM 🧑‍💼
 
-A Django-based CRM and task management system built for Akro Ventures.
+A lightweight CRM (Customer Relationship Management) web application built with Django to manage customers, track interactions, and streamline business workflows.
 
-## Features
+---
 
-✅ **Multi-user support** - Separate workspaces for Akshita and Rohit
-✅ **Task Management** - Create, track, and complete tasks with priorities
-✅ **Client Database** - Store client information and link to tasks
-✅ **Work Logging** - Track hours and productivity
-✅ **Smart Dashboard** - See urgent, overdue, and today's tasks at a glance
-✅ **Motivational Push** - Get reminded to GET TO WORK! 💪
-✅ **Priority System** - Urgent, High, Medium, Low priorities
-✅ **Status Tracking** - To Do, In Progress, Waiting, Done
+## 🚀 Features
 
-## Login Credentials
+* 📇 Manage customer records
+* 📝 Track interactions and activities
+* 🔐 Admin dashboard for easy control
+* ⚡ Lightweight and fast
+* 🧱 Scalable Django backend
 
-**Akshita:**
-- Username: `akshita`
-- Password: `akshita123`
+---
 
-**Rohit:**
-- Username: `rohit`
-- Password: `rohit123`
+## 🛠️ Tech Stack
 
-## How to Run
+* **Backend:** Django (Python)
+* **Server:** Gunicorn
+* **Static Files:** WhiteNoise
+* **Deployment:** Render
+* **Version Control:** Git & GitHub
+
+---
+
+## 📦 Local Setup
+
+### 1. Clone the repository
 
 ```bash
-cd /home/claude/workcrm
-python manage.py runserver 0.0.0.0:8000
+git clone https://github.com/YOUR_USERNAME/workcrm.git
+cd workcrm
 ```
 
-Then open your browser to: http://localhost:8000
+### 2. Create virtual environment
 
-## Quick Start
-
-1. Login with your credentials
-2. View your dashboard to see task overview
-3. Create tasks with priorities and due dates
-4. Add clients to your database
-5. Log your work hours
-6. Mark tasks as complete when done!
-
-## Dashboard Features
-
-- **Completion Rate** - See your productivity percentage
-- **Urgent Tasks** - Tasks marked as URGENT that need immediate attention
-- **Overdue Tasks** - Stop procrastinating! See what you missed
-- **Today's Tasks** - Focus on what's due today
-- **Recent Work Logs** - Track your recent activity
-
-## Motivation System
-
-Your dashboard will push you based on completion rate:
-- 80%+ → "🔥 You're crushing it!"
-- 60-79% → "💪 Great progress!"
-- 40-59% → "⚡ You can do better!"
-- <40% → "🚨 TIME TO GET TO WORK! No more excuses!"
-
-## Task Priorities
-
-- **Urgent** - Red badge, shows at top of dashboard
-- **High** - Orange badge
-- **Medium** - Blue badge  
-- **Low** - Gray badge
-
-## Password Change
-
-To change passwords, run:
 ```bash
-python manage.py changepassword akshita
-# or
-python manage.py changepassword rohit
+python -m venv venv
+venv\Scripts\activate   # Windows
+# source venv/bin/activate  # Mac/Linux
 ```
 
-Built with Django 6.0 and lots of caffeine ☕
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Apply migrations
+
+```bash
+python manage.py migrate
+```
+
+### 5. Run the server
+
+```bash
+python manage.py runserver
+```
+
+App runs at:
+👉 http://127.0.0.1:8000/
+
+---
+
+## 🔐 Admin User & Password Setup
+
+### Create Admin User
+
+```bash
+python manage.py createsuperuser
+```
+
+Enter:
+
+* Username
+* Email (optional)
+* Password
+
+---
+
+### Access Admin Panel
+
+👉 http://127.0.0.1:8000/admin/
+
+---
+
+### Change Password
+
+```bash
+python manage.py changepassword <username>
+```
+
+Example:
+
+```bash
+python manage.py changepassword admin
+```
+
+---
+
+### Reset Password (if forgotten)
+
+```bash
+python manage.py shell
+```
+
+```python
+from django.contrib.auth.models import User
+user = User.objects.get(username='admin')
+user.set_password('newpassword')
+user.save()
+```
+
+---
+
+## ☁️ Deployment (Render)
+
+This project is configured for deployment on Render.
+
+---
+
+### 🚀 Steps to Deploy
+
+1. Push code to GitHub
+2. Go to Render Dashboard
+3. Click **New → Web Service**
+4. Connect your GitHub repository
+5. Select your repo and branch
+
+---
+
+### ⚙️ Configuration
+
+**Build Command**
+
+```bash
+pip install -r requirements.txt && python manage.py collectstatic --noinput
+```
+
+**Start Command**
+
+```bash
+gunicorn workcrm.wsgi
+```
+
+---
+
+### 🌍 Environment Variables
+
+Add these in Render dashboard:
+
+```env
+PYTHON_VERSION=3.11.0
+```
+
+---
+
+## 📁 Project Structure
+
+```
+workcrm/
+├── manage.py
+├── workcrm/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+├── requirements.txt
+├── .gitignore
+```
+
+---
+
+## ⚙️ Important Settings
+
+Make sure these are set in `settings.py`:
+
+```python
+import os
+
+ALLOWED_HOSTS = ['*']
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+```
+
+WhiteNoise middleware:
+
+```python
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    ...
+]
+```
+
+---
+
+## 🧠 Notes
+
+* SQLite is used for development
+* Static files are served using WhiteNoise
+* First deploy may take a few minutes
+* If app crashes, check Render logs
+
+---
+
+## ✨ Future Improvements
+
+* User authentication & role-based access
+* Dashboard analytics
+* REST API (Django REST Framework)
+* PostgreSQL integration
+* UI improvements
+
+---
+
+## 👩‍💻 Author
+
+Akshita
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
