@@ -1,41 +1,42 @@
 # WorkCRM 🧑‍💼
 
-A lightweight CRM (Customer Relationship Management) web application built with Django to manage customers, track interactions, and streamline business workflows.
+A simple CRM web app built with Django to help manage customers and keep track of interactions without overcomplicating things.
+
+This project started as a hands-on way to build and deploy a real-world Django application.
 
 ---
 
-## 🚀 Features
+## 🚀 What it does
 
-* 📇 Manage customer records
-* 📝 Track interactions and activities
-* 🔐 Admin dashboard for easy control
-* ⚡ Lightweight and fast
-* 🧱 Scalable Django backend
-
----
-
-## 🛠️ Tech Stack
-
-* **Backend:** Django (Python)
-* **Server:** Gunicorn
-* **Static Files:** WhiteNoise
-* **Deployment:** Render
-* **Version Control:** Git & GitHub
+* Store and manage customer details
+* Track interactions/activities
+* Use Django admin for quick management
+* Keeps things minimal and easy to use
 
 ---
 
-## 📦 Local Setup
+## 🛠️ Built with
 
-### 1. Clone the repository
+* Django (Python)
+* Gunicorn
+* WhiteNoise (for static files)
+* Deployed on Render
+* GitHub for version control
 
-```bash
+---
+
+## 📦 Running locally
+
+### 1. Clone the repo
+
+```bash id="h7q9yq"
 git clone https://github.com/YOUR_USERNAME/workcrm.git
 cd workcrm
 ```
 
-### 2. Create virtual environment
+### 2. Set up environment
 
-```bash
+```bash id="y7q5u0"
 python -m venv venv
 venv\Scripts\activate   # Windows
 # source venv/bin/activate  # Mac/Linux
@@ -43,141 +44,70 @@ venv\Scripts\activate   # Windows
 
 ### 3. Install dependencies
 
-```bash
+```bash id="v1rqqt"
 pip install -r requirements.txt
 ```
 
-### 4. Apply migrations
+### 4. Run migrations
 
-```bash
+```bash id="qmqz9k"
 python manage.py migrate
 ```
 
-### 5. Run the server
+### 5. Start server
 
-```bash
+```bash id="kqg63y"
 python manage.py runserver
 ```
 
-App runs at:
-👉 http://127.0.0.1:8000/
+Open: http://127.0.0.1:8000/
 
 ---
 
-## 🔐 Admin User & Password Setup
+## 🔐 Admin access
 
-### Create Admin User
+Create an admin user:
 
-```bash
+```bash id="s0m4gl"
 python manage.py createsuperuser
 ```
 
-Enter:
-
-* Username
-* Email (optional)
-* Password
+Login here:
+http://127.0.0.1:8000/admin/
 
 ---
 
-### Access Admin Panel
+## 🔁 Change password
 
-👉 http://127.0.0.1:8000/admin/
-
----
-
-### Change Password
-
-```bash
+```bash id="4u2aeh"
 python manage.py changepassword <username>
-```
-
-Example:
-
-```bash
-python manage.py changepassword admin
-```
-
----
-
-### Reset Password (if forgotten)
-
-```bash
-python manage.py shell
-```
-
-```python
-from django.contrib.auth.models import User
-user = User.objects.get(username='admin')
-user.set_password('newpassword')
-user.save()
 ```
 
 ---
 
 ## ☁️ Deployment (Render)
 
-This project is configured for deployment on Render.
-
----
-
-### 🚀 Steps to Deploy
-
-1. Push code to GitHub
-2. Go to Render Dashboard
-3. Click **New → Web Service**
-4. Connect your GitHub repository
-5. Select your repo and branch
-
----
-
-### ⚙️ Configuration
+This app is deployed using Render.
 
 **Build Command**
 
-```bash
+```bash id="3k6t2p"
 pip install -r requirements.txt && python manage.py collectstatic --noinput
 ```
 
 **Start Command**
 
-```bash
+```bash id="c9t7mx"
 gunicorn workcrm.wsgi
 ```
 
 ---
 
-### 🌍 Environment Variables
+## ⚙️ Important settings
 
-Add these in Render dashboard:
+Make sure in `settings.py`:
 
-```env
-PYTHON_VERSION=3.11.0
-```
-
----
-
-## 📁 Project Structure
-
-```
-workcrm/
-├── manage.py
-├── workcrm/
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-├── requirements.txt
-├── .gitignore
-```
-
----
-
-## ⚙️ Important Settings
-
-Make sure these are set in `settings.py`:
-
-```python
+```python id="9r2d1s"
 import os
 
 ALLOWED_HOSTS = ['*']
@@ -186,43 +116,18 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ```
 
-WhiteNoise middleware:
-
-```python
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    ...
-]
-```
+WhiteNoise middleware should be enabled.
 
 ---
 
 ## 🧠 Notes
 
-* SQLite is used for development
-* Static files are served using WhiteNoise
-* First deploy may take a few minutes
-* If app crashes, check Render logs
+* Uses SQLite for now
+* Meant as a learning + practical project
+* Can be extended with more features easily
 
 ---
 
-## ✨ Future Improvements
+## 👩‍💻 About
 
-* User authentication & role-based access
-* Dashboard analytics
-* REST API (Django REST Framework)
-* PostgreSQL integration
-* UI improvements
-
----
-
-## 👩‍💻 Author
-
-Akshita
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License.
+Built by Akshita as part of learning, building, and actually shipping a real project 🚀
