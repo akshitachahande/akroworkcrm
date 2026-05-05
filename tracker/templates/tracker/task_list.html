@@ -1,0 +1,73 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1>📋 All Tasks</h1>
+        <a href="{% url 'task_create' %}" class="btn btn-primary">➕ New Task</a>
+    </div>
+    
+    <div style="margin-bottom: 2rem;">
+        <form method="get" style="display: flex; gap: 1rem;">
+            <select name="status" onchange="this.form.submit()">
+                <option value="">All Statuses</option>
+                <option value="todo" {% if status_filter == 'todo' %}selected{% endif %}>To Do</option>
+                <option value="in_progress" {% if status_filter == 'in_progress' %}selected{% endif %}>In Progress</option>
+                <option value="waiting" {% if status_filter == 'waiting' %}selected{% endif %}>Waiting</option>
+                <option value="done" {% if status_filter == 'done' %}selected{% endif %}>Done</option>
+            </select>
+            
+            <select name="priority" onchange="this.form.submit()">
+                <option value="">All Priorities</option>
+                <option value="urgent" {% if priority_filter == 'urgent' %}selected{% endif %}>Urgent</option>
+                <option value="high" {% if priority_filter == 'high' %}selected{% endif %}>High</option>
+                <option value="medium" {% if priority_filter == 'medium' %}selected{% endif %}>Medium</option>
+                <option value="low" {% if priority_filter == 'low' %}selected{% endif %}>Low</option>
+            </select>
+        </form>
+    </div>
+    
+    {% if tasks %}
+    <table>
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Client</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Due Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr {% if task.is_overdue %}style="background: #ffebee;"{% endif %}>
+                <td>
+                    <strong>{{ task.title }}</strong>
+                    {% if task.description %}
+                    <div style="color: #888; font-size: 0.9rem; margin-top: 0.25rem;">{{ task.description|truncatewords:15 }}</div>
+                    {% endif %}
+                </td>
+                <td>{{ task.client.name|default:"—" }}</td>
+                <td><span class="badge badge-{{ task.priority }}">{{ task.get_priority_display }}</span></td>
+                <td><span class="badge badge-{{ task.status }}">{{ task.get_status_display }}</span></td>
+                <td>
+                    {% if task.due_date %}
+                        {{ task.due_date|date:"M d, Y" }}
+                        {% if task.is_overdue %}<span style="color: red; font-weight: bold;"> (OVERDUE!)</span>{% endif %}
+                    {% else %}
+                        —
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'task_update' task.id %}" class="btn btn-primary">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="text-align: center; color: #888; padding: 2rem;">
+        No tasks found. Time to create some! 💪
+    </p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<div class="card" style="max-width: 800px; margin: 0 auto;">
+    <h1>➕ Create New Task</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <label>Task Title *</label>
+        <input type="text" name="title" required placeholder="What needs to be done?">
+        
+        <label>Description</label>
+        <textarea name="description" rows="4" placeholder="Add details..."></textarea>
+        
+        <label>Priority *</label>
+        <select name="priority" required>
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+            <option value="urgent">Urgent - Do This NOW!</option>
+        </select>
+        
+        <label>Due Date</label>
+        <input type="datetime-local" name="due_date">
+        
+        <label>Client</label>
+        <select name="client">
+            <option value="">No Client</option>
+            {% for client in clients %}
+            <option value="{{ client.id }}">{{ client.name }} - {{ client.company }}</option>
+            {% endfor %}
+        </select>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <button type="submit" class="btn btn-primary">Create Task</button>
+            <a href="{% url 'task_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

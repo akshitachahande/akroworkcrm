@@ -1,0 +1,22 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 5rem auto;">
+    <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">🔐 WorkCRM Login</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <label>Username</label>
+        <input type="text" name="username" required autofocus>
+        
+        <label>Password</label>
+        <input type="password" name="password" required>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+    </form>
+    
+    <p style="text-align: center; margin-top: 1rem; color: #888;">
+        Akro Ventures WorkCRM - Get stuff done! 💪
+    </p>
+</div>
+{% endblock %}

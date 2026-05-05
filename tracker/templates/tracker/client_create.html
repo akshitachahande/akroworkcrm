@@ -1,0 +1,31 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<div class="card" style="max-width: 800px; margin: 0 auto;">
+    <h1>➕ Add New Client</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <label>Client Name *</label>
+        <input type="text" name="name" required placeholder="Client name">
+        
+        <label>Company</label>
+        <input type="text" name="company" placeholder="Company name">
+        
+        <label>Email</label>
+        <input type="email" name="email" placeholder="email@example.com">
+        
+        <label>Phone</label>
+        <input type="tel" name="phone" placeholder="+91 1234567890">
+        
+        <label>Notes</label>
+        <textarea name="notes" rows="4" placeholder="Additional information about this client..."></textarea>
+        
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <button type="submit" class="btn btn-primary">Add Client</button>
+            <a href="{% url 'client_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
